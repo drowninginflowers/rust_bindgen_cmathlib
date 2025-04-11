@@ -6,43 +6,21 @@ fn main() {
         .canonicalize()
         .expect("cannot canonicalize path");
 
-    let headers_path = libdir_path.join("mathlib.h");
-    let headers_path_str = headers_path.to_str().expect("Path is not a valid string");
+    let header_path = libdir_path.join("mathlib.h");
 
-    let obj_path = libdir_path.join("mathlib.o");
-    let lib_path = libdir_path.join("libmathlib.a");
+    println!("cargo::rerun-if-changed={}", header_path.display());
+    println!("cargo::rerun-if-changed={}", libdir_path.join("mathlib.c").display());
 
-    println!("cargo::rustc-link-search={}", libdir_path.to_str().unwrap());
+    cc::Build::new()
+        .file(libdir_path.join("mathlib.c"))
+        .include(&libdir_path)
+        .compile("mathlib");
 
     println!("cargo::rustc-link-lib=mathlib");
-
-    if !std::process::Command::new("clang")
-        .arg("-c")
-        .arg("-o")
-        .arg(&obj_path)
-        .arg(libdir_path.join("mathlib.c"))
-        .output()
-        .expect("could not spawn `clang`")
-        .status
-        .success()
-    {
-        panic!("could not compile object file");
-    }
-
-    if !std::process::Command::new("ar")
-        .arg("rcs")
-        .arg(lib_path)
-        .arg(obj_path)
-        .output()
-        .expect("could not spawn `ar`")
-        .status
-        .success()
-    {
-        panic!("could not emit library file");
-    }
-
+    println!("cargo::rustc-link-search=native={}", env::var("OUT_DIR").unwrap());
+    
     let bindings = bindgen::Builder::default()
-        .header(headers_path_str)
+        .header(header_path.to_str().unwrap())
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
         .expect("Unable to generate bindings");
