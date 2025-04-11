@@ -1,0 +1,13 @@
+# Rust-specific
+**/target/
+
+# C build artifacts
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+
+# Binaries
+*.exe
+*.out
