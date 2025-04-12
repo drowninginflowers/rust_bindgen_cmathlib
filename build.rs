@@ -2,7 +2,7 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    let libdir_path = PathBuf::from("../c_mathlib")
+    let libdir_path = PathBuf::from("cmathlib")
         .canonicalize()
         .expect("cannot canonicalize path");
 
@@ -18,12 +18,6 @@ fn main() {
         .file(libdir_path.join("mathlib.c"))
         .include(&libdir_path)
         .compile("mathlib");
-
-    println!("cargo::rustc-link-lib=mathlib");
-    println!(
-        "cargo::rustc-link-search=native={}",
-        env::var("OUT_DIR").unwrap()
-    );
 
     let bindings = bindgen::Builder::default()
         .header(header_path.to_str().unwrap())
