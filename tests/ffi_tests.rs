@@ -1,39 +1,39 @@
 #[cfg(test)]
 mod tests {
-    use bindgen_simple::mathlib_rust;
+    use rust_bindgen_cmathlib::mathlib_rust::*;
 
     #[test]
     fn test_add() {
         let a = 3;
         let b = 5;
-        assert_eq!(a + b, mathlib_rust::lib_add(a, b));
+        assert_eq!(a + b, lib_add(a, b));
     }
 
     #[test]
     fn test_subtract() {
         let a = 3;
         let b = 5;
-        assert_eq!(a - b, mathlib_rust::lib_subtract(a, b));
+        assert_eq!(a - b, lib_subtract(a, b));
     }
 
     #[test]
     fn test_multiply() {
         let a = 3;
         let b = 5;
-        assert_eq!(a * b, mathlib_rust::lib_multiply(a, b));
+        assert_eq!(a * b, lib_multiply(a, b));
     }
 
     #[test]
     fn test_divide() {
         let a = 3;
         let b = 5;
-        assert_eq!(a as f64 / b as f64, mathlib_rust::lib_divide(a, b));
+        assert_eq!(a as f64 / b as f64, lib_divide(a, b));
     }
 
     #[test]
     fn test_divide_by_zero() {
         let a = 3;
         let b = 0;
-        assert_eq!(0.0, mathlib_rust::lib_divide(a, b));
+        assert_eq!(0.0, lib_divide(a, b));
     }
 }
