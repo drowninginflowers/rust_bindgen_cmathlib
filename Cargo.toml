@@ -1,5 +1,5 @@
 [package]
-name = "bindgen_simple"
+name = "rust_bindgen_cmathlib"
 version = "0.1.0"
 edition = "2024"
 build = "build.rs"
