@@ -19,12 +19,6 @@ fn main() {
         .include(&libdir_path)
         .compile("mathlib");
 
-    println!("cargo::rustc-link-lib=mathlib");
-    println!(
-        "cargo::rustc-link-search=native={}",
-        env::var("OUT_DIR").unwrap()
-    );
-
     let bindings = bindgen::Builder::default()
         .header(header_path.to_str().unwrap())
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
