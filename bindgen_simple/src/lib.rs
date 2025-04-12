@@ -1,5 +1,9 @@
-pub mod mathlib_rust {
+mod bindings {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+}
+
+pub mod mathlib_rust {
+    use super::bindings::{add, subtract, multiply, divide};
 
     pub fn lib_add(a: i32, b: i32) -> i32 {
         unsafe { add(a, b) }
