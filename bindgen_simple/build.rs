@@ -2,7 +2,7 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    let libdir_path = PathBuf::from("../c_mathlib")
+    let libdir_path = PathBuf::from("c_mathlib")
         .canonicalize()
         .expect("cannot canonicalize path");
 
